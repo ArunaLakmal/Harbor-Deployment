@@ -67,6 +67,10 @@ resource "aws_route_table" "hbr_pvt_rt" {
 }
 
 #---- Subnets ----
+
+data "aws_availability_zones" "available" {
+  state = "available"
+}
 resource "aws_subnet" "hbr_public1_subnet" {
   vpc_id                  = "${aws_vpc.hbr_vpc.id}"
   cidr_block              = "${var.cidrs["public1"]}"
