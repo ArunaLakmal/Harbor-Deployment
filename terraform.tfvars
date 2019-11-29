@@ -6,3 +6,7 @@ cidrs = {
   private1 = "10.0.3.0/24"
   private2 = "10.0.4.0/24"
 }
+hbr_key_name = "ironman"
+public_key_path = "/root/.ssh/ironman.pub"
+hbr_instance = "t2.medium"
+hbr_ami = "ami-00dc79254d0461090"
