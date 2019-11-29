@@ -116,7 +116,7 @@ resource "aws_route_table_association" "hbr_public2_rt_assoc" {
 }
 resource "aws_route_table_association" "hbr_private1_rt_assoc" {
   subnet_id      = "${aws_subnet.hbr_private1_subnet.id}"
-  route_table_id = "${aws_route_table.hbr_pvt_rt.id"
+  route_table_id = "${aws_route_table.hbr_pvt_rt.id}"
 }
 
 #---- Security Group ----
