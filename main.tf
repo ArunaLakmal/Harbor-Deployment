@@ -32,7 +32,7 @@ resource "aws_eip" "hbr_eip" {
 resource "aws_nat_gateway" "hbr_nat_gw" {
   allocation_id = "${aws_eip.hbr_eip.id}"
   subnet_id     = "${aws_subnet.hbr_public2_subnet.id}"
-  depends_on    = ["${ws_internet_gateway.hbr_nat_gw}"]
+  depends_on    = ["aws_internet_gateway.hbr_igw"]
 
   tags = {
     Name = "hbr_nat_gateway"
@@ -43,7 +43,7 @@ resource "aws_nat_gateway" "hbr_nat_gw" {
 resource "aws_route_table" "hbr_pub_rt" {
   vpc_id = "${aws_vpc.hbr_vpc.id}"
 
-  route = {
+  route {
     cidr_block = "0.0.0.0/0"
     gateway_id = "${aws_internet_gateway.hbr_igw.id}"
   }
@@ -56,7 +56,7 @@ resource "aws_route_table" "hbr_pub_rt" {
 resource "aws_route_table" "hbr_pvt_rt" {
   vpc_id = "${aws_vpc.hbr_vpc.id}"
 
-  route = {
+  route {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = "${aws_nat_gateway.hbr_nat_gw.id}"
   }
@@ -91,7 +91,7 @@ resource "aws_subnet" "hbr_private1_subnet" {
   vpc_id                  = "${aws_vpc.hbr_vpc.id}"
   cidr_block              = "${var.cidrs["private1"]}"
   map_public_ip_on_launch = true
-  availability_zone       = "${data.aws_availability_zones.names[0]}"
+  availability_zone       = "${data.aws_availability_zones.available.names[0]}"
 
   tags = {
     Name = "hbr_private1"
