@@ -98,3 +98,18 @@ resource "aws_subnet" "hbr_private1_subnet" {
   }
 
 }
+
+#---- Route Table Associations ----
+resource "aws_route_table_association" "hbr_public1_rt_assoc" {
+  subnet_id      = "${aws_subnet.hbr_public1_subnet.id}"
+  route_table_id = "${aws_route_table.hbr_pub_rt.id}"
+}
+resource "aws_route_table_association" "hbr_public2_rt_assoc" {
+  subnet_id      = "${aws_subnet.hbr_public2_subnet.id}"
+  route_table_id = "${aws_subnet.hbr_public2_subnet.id}"
+}
+resource "aws_route_table_association" "hbr_private1_rt_assoc" {
+  subnet_id      = "${aws_subnet.hbr_private1_subnet.id}"
+  route_table_id = "${aws_subnet.hbr_private1_subnet.id}"
+}
+
