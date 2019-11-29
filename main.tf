@@ -72,5 +72,29 @@ resource "aws_subnet" "hbr_public1_subnet" {
   cidr_block              = "${var.cidrs["public1"]}"
   map_public_ip_on_launch = true
   availability_zone       = "${data.aws_availability_zones.available.names[0]}"
-}
 
+  tags = {
+    Name = "hbr_public1"
+  }
+}
+resource "aws_subnet" "hbr_public2_subnet" {
+  vpc_id                  = "${aws_vpc.hbr_vpc.id}"
+  cidr_block              = "${var.cidrs["public2"]}"
+  map_public_ip_on_launch = true
+  availability_zone       = "${data.aws_availability_zones.available.names[1]}"
+
+  tags = {
+    Name = "hbr_public2"
+  }
+}
+resource "aws_subnet" "hbr_private1_subnet" {
+  vpc_id                  = "${aws_vpc.hbr_vpc.id}"
+  cidr_block              = "${var.cidrs["private1"]}"
+  map_public_ip_on_launch = true
+  availability_zone       = "${data.aws_availability_zones.names[0]}"
+
+  tags = {
+    Name = "hbr_private1"
+  }
+
+}
