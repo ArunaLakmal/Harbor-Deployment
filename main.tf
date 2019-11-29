@@ -115,59 +115,59 @@ resource "aws_route_table_association" "hbr_private1_rt_assoc" {
 
 #---- Security Group ----
 resource "aws_security_group" "hbr_public_sg" {
-  name = "hbr_security_group"
+  name        = "hbr_security_group"
   description = "harbor public security group"
-  vpc_id = "${aws_vpc.hbr_vpc.id}"
+  vpc_id      = "${aws_vpc.hbr_vpc.id}"
 
   ingress {
-    from_port = 1
-    to_port = 65535
-    protocol = "tcp"
+    from_port   = 1
+    to_port     = 65535
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = -1
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 resource "aws_security_group" "hbr_private_sg" {
-  name = "hbr_security_group"
+  name        = "hbr_security_group"
   description = "habor private group"
-  vpc_id = "${aws_vpc.hbr_vpc.id}"
+  vpc_id      = "${aws_vpc.hbr_vpc.id}"
 
   ingress {
-    from_port = 0
-    to_port = 0
-    protocol = "tcp"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "tcp"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 #---- Key Pair ----
 resource "aws_key_pair" "hbr_key" {
-  key_name = "${var.hbr_key_name}"
+  key_name   = "${var.hbr_key_name}"
   public_key = "${file(var.public_key_path)}"
 }
 #---- EC2 Instance -----
 resource "aws_instance" "hbr_instance" {
   instance_type = "${var.hbr_instance}"
-  ami = "${var.hbr_ami}"
+  ami           = "${var.hbr_ami}"
 
   tags = {
     Name = "hbr_registry"
   }
 
-  key_name = "${aws_key_pair.hbr_key.id}"
+  key_name               = "${aws_key_pair.hbr_key.id}"
   vpc_security_group_ids = ["${aws_security_group.hbr_private_sg.id}"]
-  subnet_id = "${aws_security_group.hbr_private_sg.id}"
+  subnet_id              = "${aws_security_group.hbr_private_sg.id}"
 }
