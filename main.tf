@@ -121,7 +121,7 @@ resource "aws_route_table_association" "hbr_private1_rt_assoc" {
 
 #---- Security Group ----
 resource "aws_security_group" "hbr_public_sg" {
-  name        = "hbr_security_group"
+  name        = "hbr_public_security_group"
   description = "harbor public security group"
   vpc_id      = "${aws_vpc.hbr_vpc.id}"
 
@@ -141,7 +141,7 @@ resource "aws_security_group" "hbr_public_sg" {
 }
 
 resource "aws_security_group" "hbr_private_sg" {
-  name        = "hbr_security_group"
+  name        = "hbr_private_security_group"
   description = "habor private group"
   vpc_id      = "${aws_vpc.hbr_vpc.id}"
 
