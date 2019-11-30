@@ -1,0 +1,26 @@
+- name: Habor ansible playbook
+  become: yes
+  gather_facts: false
+  hosts: all
+  tasks:
+  - name: Downloading Harbor
+    remote_user: ubuntu
+    get_url:
+      url: https://github.com/goharbor/harbor/releases/download/v1.10.0-rc1/harbor-offline-installer-v1.10.0-rc1.tgz
+      dest: /tmp
+      mode: '0777'
+  - name: Unzip Habor File
+    remote_user: ubuntu
+    unarchive:
+      src: /tmp/harbor-offline-installer-v1.10.0-rc1.tgz
+      dest: /tmp
+      remote_src: yes
+  - name: Copy Habor Configuration
+    remote_user: ubuntu
+    copy:
+      src: /tmp/harbor.yml
+      dest: /tmp/harbor
+      backup: yes
+  - name: Install Harbor
+    remote_user: ubuntu
+    shell: /tmp/harbor/install.sh
