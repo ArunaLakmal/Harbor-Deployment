@@ -178,6 +178,6 @@ resource "aws_instance" "hbr_instance" {
   }
 
   key_name               = "${aws_key_pair.hbr_key.id}"
-  vpc_security_group_ids = ["${aws_security_group.hbr_private_sg.id}"]
+  vpc_security_group_ids = ["${aws_security_group.hbr_public_sg.id}"]
   subnet_id              = "${aws_subnet.hbr_public1_subnet.id}"
 }
