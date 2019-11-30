@@ -28,11 +28,15 @@ resource "aws_internet_gateway" "hbr_igw" {
 resource "aws_eip" "hbr_eip" {
   vpc        = true
   depends_on = ["aws_internet_gateway.hbr_igw"]
+
+  tags = {
+    Name = "hbr_nat_gw"
+  }
 }
 
 resource "aws_nat_gateway" "hbr_nat_gw" {
   allocation_id = "${aws_eip.hbr_eip.id}"
-  subnet_id     = "${aws_subnet.hbr_public2_subnet.id}"
+  subnet_id     = "${aws_subnet.hbr_public1_subnet.id}"
   depends_on    = ["aws_internet_gateway.hbr_igw"]
 
   tags = {
@@ -126,7 +130,7 @@ resource "aws_security_group" "hbr_public_sg" {
   vpc_id      = "${aws_vpc.hbr_vpc.id}"
 
   ingress {
-    from_port   = 1
+    from_port   = 0
     to_port     = 65535
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
@@ -148,13 +152,13 @@ resource "aws_security_group" "hbr_private_sg" {
   ingress {
     from_port   = 0
     to_port     = 0
-    protocol    = "tcp"
+    protocol    = -1
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "tcp"
+    protocol    = -1
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
