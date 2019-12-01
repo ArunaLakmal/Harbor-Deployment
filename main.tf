@@ -195,7 +195,7 @@ resource "aws_instance" "hbr_instance" {
 }
 
 resource "null_resource" "docker_config" {
-  command = "aws ec2 wait instance-status-ok --instance-ids ${aws_instance.hbr_instance.id} --profile superhero && ansible-playbook -i harbor_hosts ansible-docker-deploy.yaml"
+  command = "ansible-playbook -i harbor_hosts ansible-docker-deploy.yaml"
 }
 
 resource "null_resource" "hbr_config" {
