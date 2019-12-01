@@ -184,10 +184,10 @@ resource "aws_instance" "hbr_instance" {
   provisioner "local-exec" {
     command = <<EOD
     cat <<EOF > harbor_hosts
-  [harborhosts]
-  ${aws_instance.hbr_instance.public_ip}
-  EOF
-  EOD
+[harborhosts]
+${aws_instance.hbr_instance.public_ip}
+EOF
+EOD
   }
   provisioner "local-exec" {
     command = "sudo sed -i '1ihostname: ${aws_instance.hbr_instance.public_ip}' harbor.yml"
