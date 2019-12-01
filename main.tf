@@ -198,6 +198,6 @@ EOD
   }
 
   provisioner "local-exec" {
-    command = "aws ec2 wait instance-status-ok --instance-ids ${aws_instance.hbr_instance.id} --profile superhero && ansible-playbook -i harbor_hosts ansible-docker-deploy.yaml"
+    command = "aws ec2 wait instance-status-ok --instance-ids ${aws_instance.hbr_instance.id} --profile superhero && ansible-playbook -i harbor_hosts harbor-ansible-playbook.yaml"
   }
 }
