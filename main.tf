@@ -183,7 +183,7 @@ resource "aws_instance" "hbr_instance" {
 
   provisioner "local-exec" {
     command = <<EOD
-    cat<<EOF > harbor_hosts
+    cat <<EOF > harbor_hosts
   [harborhosts]
   ${aws_instance.hbr_instance.public_ip}
   EOF
