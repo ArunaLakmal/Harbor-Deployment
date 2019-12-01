@@ -18,7 +18,7 @@
   - name: Copy Habor Configuration
     remote_user: ubuntu
     copy:
-      src: /tmp/harbor.yml
+      src: harbor.yml
       dest: /tmp/harbor
       backup: yes
   - name: Install Harbor
