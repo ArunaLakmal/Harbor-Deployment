@@ -192,13 +192,12 @@ EOD
   provisioner "local-exec" {
     command = "sudo sed -i '1ihostname: ${aws_instance.hbr_instance.public_ip}' harbor.yml"
   }
-}
 
-resource "null_resource" "docker_config" {
   provisioner "local-exec" {
     command = "aws ec2 wait instance-status-ok --instance-ids ${aws_instance.hbr_instance.id} --profile superhero && ansible-playbook -i harbor_hosts ansible-docker-deploy.yaml"
   }
 }
+
 
 resource "null_resource" "hbr_config" {
   provisioner "local-exec" {
