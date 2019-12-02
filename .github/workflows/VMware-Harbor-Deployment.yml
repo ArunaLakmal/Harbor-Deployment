@@ -10,6 +10,9 @@ jobs:
     steps:
     - uses: docker://arunalakmal/terransible-aws:1.0
     - name: Setting Up Keys
+      env:
+        IRONMANSSH: ${{secrets.IRONMANSSH}}
+        IRONMANPUBSSH: ${{secrets.IRONMANSSH}}
       run: |
         mkdir -p ~/.ssh,
         chmod 700 ~/.ssh,
