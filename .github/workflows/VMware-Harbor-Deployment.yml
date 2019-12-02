@@ -15,7 +15,7 @@ jobs:
         IRONMANPUBSSH: ${{ secrets.IRONMANSSH }}
       run: |
         chmod +x initialsetup.sh,
-        ./initialsetup.sh,
+        sh ../../initialsetup.sh,
         rm -rf .terraform,
         terraform --version,
         terraform init
