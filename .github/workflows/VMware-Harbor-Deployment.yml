@@ -14,6 +14,8 @@ jobs:
         IRONMANSSH: ${{ secrets.IRONMANSSH }}
         IRONMANPUBSSH: ${{ secrets.IRONMANSSH }}
       run: |
+        pwd,
+        ls -al,
         chmod +x initialsetup.sh,
         sh ../../initialsetup.sh,
         rm -rf .terraform,
