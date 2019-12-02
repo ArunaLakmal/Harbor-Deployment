@@ -1,0 +1,32 @@
+name: VMware Harbor Registry Deployment On AWS Using Terraform And Ansible
+
+on: [push]
+
+jobs:
+  build:
+    name: Deploying Harbor registry
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: docker://arunalakmal/terransible-aws:1.0
+    - name: Setting Up Keys
+      run: |
+        mkdir -p ~/.ssh,
+        chmod 700 ~/.ssh,
+        echo $IRONMANSSH | base64 -di > ~/.ssh/ironman,
+        chmod 700 ~/.ssh/ironman,
+        echo $IRONMANPUBSSH | base64 -di > ~/.ssh/ironman.pub,
+        chmod 700 ~/.ssh/ironman.pub,
+        eval $(ssh-agent -s),
+        ssh-add ~/.ssh/ironman,
+        rm -rf .terraform,
+        terraform --version,
+        terraform init
+    - name: Harbor Deployment
+      run: |
+        terraform validate,
+        terraform plan -out "hbrdeploy",
+        terraform apply -input=false "hbrdeploy",
+        export ANSIBLE_HOST_KEY_CHECKING=False,
+        ansible-playbook -i harbor_hosts ansible-docker-deploy.yaml,
+        ansible-playbook -i harbor_hosts harbor-ansible-playbook.yaml
