@@ -14,9 +14,10 @@ jobs:
         IRONMANSSH: ${{ secrets.IRONMANSSH }}
         IRONMANPUBSSH: ${{ secrets.IRONMANSSH }}
       run: |
+        markx=$IRONMANSSH
         mkdir -p ~/.ssh,
         chmod 700 ~/.ssh,
-        echo $IRONMANSSH | base64 -di > ~/.ssh/ironman,
+        echo $markx | base64 -di > ~/.ssh/ironman,
         chmod 700 ~/.ssh/ironman,
         echo $IRONMANPUBSSH | base64 -di > ~/.ssh/ironman.pub,
         chmod 700 ~/.ssh/ironman.pub,
