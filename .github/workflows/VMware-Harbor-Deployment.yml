@@ -11,14 +11,14 @@ jobs:
     - uses: docker://arunalakmal/terransible-aws:1.0
     - name: Setting Up Keys
       env:
-        IRONMANSSH: ${{secrets.IRONMANSSH}}
-        IRONMANPUBSSH: ${{secrets.IRONMANSSH}}
+        IRONMANSSH: ${{ secrets.IRONMANSSH }}
+        IRONMANPUBSSH: ${{ secrets.IRONMANSSH }}
       run: |
         mkdir -p ~/.ssh,
         chmod 700 ~/.ssh,
-        $IRONMANSSH | base64 -di > ~/.ssh/ironman,
+        echo $IRONMANSSH | base64 -di > ~/.ssh/ironman,
         chmod 700 ~/.ssh/ironman,
-        $IRONMANPUBSSH | base64 -di > ~/.ssh/ironman.pub,
+        echo $IRONMANPUBSSH | base64 -di > ~/.ssh/ironman.pub,
         chmod 700 ~/.ssh/ironman.pub,
         eval $(ssh-agent -s),
         ssh-add ~/.ssh/ironman,
@@ -26,6 +26,9 @@ jobs:
         terraform --version,
         terraform init
     - name: Harbor Deployment
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
         terraform validate,
         terraform plan -out "hbrdeploy",
